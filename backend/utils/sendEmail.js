@@ -1,31 +1,35 @@
-const nodemailer = require('nodemailer');
-const dns = require('dns');
-dns.setDefaultResultOrder('ipv4first');
+const axios = require('axios');
 
 const sendEmail = async ({ email, subject, message }) => {
   try {
-    const transporter = nodemailer.createTransport({
-      host: 'smtp.gmail.com',
-      port: 587,
-      secure: false,
-      requireTLS: true,
-      auth: {
-        user: process.env.GMAIL_USER,
-        pass: process.env.GMAIL_PASS,
+    const data = {
+      sender: {
+        name: 'ShopNest Support',
+        email: process.env.BREVO_SENDER_EMAIL || process.env.GMAIL_USER,
       },
-    });
-
-    const mailOptions = {
-      from: `"ShopNest Support" <${process.env.GMAIL_USER}>`,
-      to: email,
+      to: [
+        {
+          email: email,
+        },
+      ],
       subject: subject,
-      html: message,
+      htmlContent: message,
     };
 
-    await transporter.sendMail(mailOptions);
-    console.log(`Email successfully sent to ${email}`);
+    const config = {
+      headers: {
+        'api-key': process.env.BREVO_API_KEY,
+        'Content-Type': 'application/json',
+      },
+    };
+
+    await axios.post('https://api.brevo.com/v3/smtp/email', data, config);
+    console.log(`Email successfully sent to ${email} via Brevo API`);
   } catch (error) {
-    console.error(`Failed to send email to ${email}: ${error.message}`);
+    console.error(
+      `Failed to send email to ${email}:`,
+      error.response ? error.response.data : error.message
+    );
   }
 };
 
