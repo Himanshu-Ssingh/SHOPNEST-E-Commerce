@@ -26,15 +26,13 @@ const addOrderItems = async (req, res) => {
         <p>Thank you for shopping with ShopNest!</p>
       `;
 
-      try {
-        await sendEmail({
-          email: req.user.email,
-          subject: 'ShopNest - Order Confirmation',
-          message
-        });
-      } catch (emailError) {
-        console.error('Email sending failed (likely due to dummy credentials), but order was placed:', emailError.message);
-      }
+      sendEmail({
+        email: req.user.email,
+        subject: 'ShopNest - Order Confirmation',
+        message
+      }).catch(emailError => {
+        console.error('Email sending failed in background:', emailError.message);
+      });
 
       res.status(201).json(createdOrder);
     }
