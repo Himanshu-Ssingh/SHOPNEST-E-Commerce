@@ -1,2 +1,29 @@
 node_modules
 .env
+.env.local
+.env.production
+.env.staging
+
+# Build outputs
+build/
+dist/
+*.log
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Temporary files
+*.tmp
+*.temp
