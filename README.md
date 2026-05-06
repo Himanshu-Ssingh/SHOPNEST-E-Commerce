@@ -12,7 +12,7 @@
 - **Backend:** Node.js, Express.js architecture mapped with middleware-based routing.
 - **Database:** MongoDB (via Mongoose schemas).
 - **Features:** Unified Admin Dashboard, Direct Cloudinary Content Maps, Personal User Profiles matching mapped Order Histories.
-- **Payments:** Razorpay fully implemented (utilize your test metrics or placeholder).
+- **Payments:** Mock payment system (bypassed for demo purposes - ready for Razorpay integration).
 - **Cloud Storage:** Cloudinary integration for Product image uploading securely via Multer.
 
 ---
@@ -30,8 +30,12 @@ PORT=5000
 NODE_ENV=development
 MONGO_URI=mongodb://127.0.0.1:27017/shopnest
 JWT_SECRET=super_secret_key
-RAZORPAY_KEY_ID=your_key_id
-RAZORPAY_KEY_SECRET=your_key_secret
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret
+GMAIL_USER=your_email@gmail.com
+GMAIL_PASS=your_app_password
+FRONTEND_URL=http://localhost:3000
 ```
 
 From the **root folder** `shopnest/`, trigger a full install across environments:
@@ -62,7 +66,7 @@ The server codebase features a seamless fallback mechanic leveraging Node `proce
 2. Go to [Render Dashboard](https://dashboard.render.com).
 3. Connect Repo -> Create a **Web Service**.
 4. Configure Build Command:
-   `npm run render-build` 
+   `npm run build` 
    *(This cleanly installs API + UI node_modules then generates `react-scripts build`)*
 5. Configure Start Command:
    `npm start`
